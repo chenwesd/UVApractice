@@ -20,3 +20,4 @@ i指的是將第幾個物品放入的情況
 
 再來看右邊wet[j - weight][i] + cost，如果要拿則剩下的空間減少，所以j - weight，而且背包中價值增加，所以+cost。
 
+uva10130.cpp與uva10819.cpp類似題目
