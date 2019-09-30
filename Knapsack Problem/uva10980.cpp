@@ -21,11 +21,10 @@ int main() {
         }
         int n;
         cin>>n;
-        //cout<<n<<endl;
         buy BUY[102];
         for(int i=0; i<n; i++) {
             cin>>BUY[i].num>>BUY[i].price;
-            //cout<<BUY[i].num<<BUY[i].price<<endl;
+            //如果j數量的物品以BUY[i]替換其中一部分而價錢會變少的話則更新
             for(int j=BUY[i].num; j<1000; j++) {
                 double t=BUY[i].price+BW[j-BUY[i].num];
                 if(t<BW[j]) {
@@ -33,10 +32,6 @@ int main() {
                 }
             }
         }
-//        for(int i=0;i<100;i++)
-//        {
-//            cout<<BW[i]<<endl;
-//        }
         string s;
         cin.get();
         getline(cin,s);
@@ -54,22 +49,17 @@ int main() {
                 num+=s[i]-48;
             }
             double mn=1000000;
+            //因題目可以買超過數量，故往後尋找最小錢
             for(int j=num; j<1000; j++) {
                 if(mn>BW[j]) {
                     mn=BW[j];
                 }
             }
-
-            //cout<<num<<endl;
-
-                cout<<"Buy "<<num<<" for "<<"$"<<fixed <<  setprecision(2) <<mn<<endl;
-                fs<<"Buy "<<num<<" for "<<"$"<<fixed <<  setprecision(2) <<mn<<endl;
-
+            cout<<"Buy "<<num<<" for "<<"$"<<fixed <<  setprecision(2) <<mn<<endl;
+            fs<<"Buy "<<num<<" for "<<"$"<<fixed <<  setprecision(2) <<mn<<endl;
             num=0;
         }
-        //cout<<endl;
         Case++;
     }
     fs.close();
-
 }
