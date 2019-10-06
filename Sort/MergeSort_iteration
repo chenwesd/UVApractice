@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+int arr[9] = {5, 4, 3, 7, 2, 1, 8, 9, 6};
+vector<int> vi(arr, arr + 9);
+
+int merge() {
+    vector<int> sub;
+    for (int seg = 1; seg < 9; seg+=seg) {
+        for (int j = 0; j < 9; j += 2 * seg) {
+            int front = j;
+            int mid = min(9, j + seg);
+            int end = min(9, j + seg + seg);
+            int idxLeft = front, idxRight = mid;
+            while (idxLeft < mid && idxRight < end) {
+                if (vi[idxLeft] < vi[idxRight]) {
+                    sub.push_back(vi[idxLeft]);
+                    idxLeft++;
+                } else {
+                    sub.push_back(vi[idxRight]);
+                    idxRight++;
+                }
+            }
+            while (idxLeft < mid) {
+                sub.push_back(vi[idxLeft]);
+                idxLeft++;
+            }
+            while (idxRight < end) {
+                sub.push_back(vi[idxRight]);
+                idxRight++;
+            }
+            cout<<"idx:"<<idxLeft<<" "<<idxRight<<" mid:"<<mid<<" end:"<<end<<endl;
+        }
+        
+        for(auto& v:sub)
+        {cout<<v<<" ";}
+        cout<<endl;
+        vi.swap(sub);
+        sub.clear();
+    }
+}
+
+int main(int argc, char** argv) {
+    merge();
+    return 0;
+}
