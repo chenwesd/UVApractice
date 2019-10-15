@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define Inf 9999999
+int main(int argc, char**argv) {
+    ios::sync_with_stdio(false);
+    
+    int elev[5];
+    
+    int n,floork;
+    int weight[102][102];
+    int range[102];
+    vector<int> stop;
+    while(cin>>n>>floork)
+    {
+        for(int i=0;i<102;i++)
+        {
+            range[i]=Inf;
+        }
+        
+        for(int i=0;i<102;i++)
+            for(int j=0;j<102;j++)
+                weight[i][j]=Inf;
+        
+        for(int i=0;i<n;i++)
+        {
+            cin>>elev[i];
+        }
+        cin.get();
+        string s;
+        for(int i=0;i<n;i++)
+        {
+            getline(cin,s);
+            string digit;
+            char dig[100];
+            for(auto& v:s)
+            {
+                if(isdigit(v))
+                {
+                    digit.push_back(v);
+                }
+                else
+                {
+                    strcpy(dig,digit.c_str());
+                    stop.push_back(atoi(dig));
+                    digit.clear();
+                }
+            }
+            strcpy(dig,digit.c_str());
+            stop.push_back(atoi(dig));
+            digit.clear();
+            for(int j=0;j<stop.size();j++)
+            {
+                for(int k=j+1;k<stop.size();k++)
+                {
+                    int s1=stop[j];
+                    int s2=stop[k];
+                    if(elev[i]*(s2-s1)<weight[s1][s2])
+                    {
+                        weight[s1][s2]=weight[s2][s1]=elev[i]*(s2-s1);
+                    }
+                }
+            }
+            stop.clear();
+        }
+        
+        queue<int> Q;
+        bool inQueue[102]={false};
+        Q.push(0);
+        range[0]=0;
+        inQueue[0]=true;
+        while(!Q.empty())
+        {
+            int now=Q.front();
+            inQueue[now]=false;
+            Q.pop();
+            for(int nxt=0;nxt<100;nxt++)
+            {
+                if(range[now]+weight[now][nxt]+60<range[nxt])
+                {
+                    range[nxt]=range[now]+weight[now][nxt]+60;
+                    if(!inQueue[nxt])
+                    {
+                        Q.push(nxt);
+                        inQueue[nxt]=true;
+                    }
+                }
+            }
+        }
+        if(floork==0)cout<<0<<endl;
+        else if(range[floork]==Inf)cout<<"IMPOSSIBLE"<<endl;
+        else cout<<range[floork]-60<<endl;
+    }
+}
